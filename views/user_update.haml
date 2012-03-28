@@ -16,11 +16,10 @@
       .fill
         .container
           %img{:src => "/img/shwitter-logo.png"}
-          - if user.nil?
-            %form.pull-right{:action => ""}
-              %input.input-small{:placeholder => "Username", :type => "text"}/
-              %input.input-small{:placeholder => "Password", :type => "password"}/
-              %button.btn{:type => "submit"} Sign in
+          %form.pull-right{:action => ""}
+            %input.input-small{:placeholder => "Username", :type => "text"}/
+            %input.input-small{:placeholder => "Password", :type => "password"}/
+            %button.btn{:type => "submit"} Sign in
     .container
       .content
         .page-header
@@ -29,10 +28,13 @@
             %small Запиши пока не забыла
         .row-fluid
           .span8
-            - details.each do |key, value|
-              %p
-                =key
-                %strong= value
+            %p
+              Как звать:
+              %strong= user.username
+              %form(action="/profile" method="post")
+                %label(for="password")Eлехтронная почта:
+                %input#email(type="text" name="email")
+                %input(type="submit" value="Submit")
 
       %footer
         %p &copy; Shweeter 2011

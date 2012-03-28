@@ -1,6 +1,66 @@
-%p Shwitter
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %title Bootstrap, from Twitter
+    %meta{:content => "", :name => "description"}/
+    %meta{:content => "", :name => "author"}/
+    / Le HTML5 shim, for IE6-8 support of HTML elements
+    /[if lt IE 9]
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    / Le styles
+    %link{:href => "/css/bootstrap.css", :rel => "stylesheet"}/
 
-%p= users_count
+  %body
+    .topbar
+      .fill
+        .container
+          %img{:src => "/img/shwitter-logo.png"}
+          - if user.nil?
+            %form.pull-right(action="/login" method="post")
+              %input.input-small(placeholder = "Username" type="text" name="username")
+              %input.input-small(placeholder = "Password" type="password" name="password")
+              %button.btn(type="submit") Sign in
+    .container
+      .content
+        .page-header
+          %h1
+            Социальная сеть для бабушек
+            %small Запиши пока не забыла
+        .row-fluid
+          .span8
+            - if user
+              %h2 Вяжи сюда
+              %br
+              %br
+              %form(action="/post" method="post")
+                %label(for="is_private")Сберкнижка?
+                %input#is_private(type="checkbox" name="is_private" value=1)
+                %label(for="message")Чаво вяжем:
+                %input#message(type="text" name="message" class="span8")
+                %input(type="submit" value="Вязать")
+              %br
+              %br
+            - posts.reverse.each do |post|
+              .row-fluid
+                %p
+                  .span2
+                    %h5= post.user.username
+                    вяжет:
+                  = post.message
 
-- users.each do |user|
-    %p= user
+          .span4
+            %h3 Бабушки
+            %p
+              = users_count
+            - users.each do |user|
+              %p
+                %a{:href => "/users/#{user}"}
+                  = user
+
+      %br
+      %br
+
+      %footer
+        %p &copy; Shweeter 2011
+    / /container

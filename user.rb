@@ -10,7 +10,7 @@ class User
   attr_reader :details
 
   def initialize(username, password)
-    @details = {:admin => false}
+    @details = {:admin => (@@users.empty?), :new => true}
     @username = username
     @password = password
     @@users[username] = self
@@ -19,6 +19,12 @@ class User
   def User.authenticate(username, password)
     u = @@users[username]
     u ? u.password == password ? u : nil : User.new(username, password)
+  end
+
+  def User.update(user, new_details)
+    puts user
+    puts new_details
+    user.details.merge! new_details
   end
 
 end
